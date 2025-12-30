@@ -27,8 +27,10 @@ public class TravelService {
     UserRepo userRepo;
 
     //to add a trip
-    public Travel addTravel(Travel travel){
-        return travelRepo.save(travel);
+    public Travel addTravel(Travel travel,Long userId){
+         travelRepo.save(travel);
+         joinTravel(userId,travel.getTravelId());
+         return travel;
     }
 
     public List<Travel> getAllTravels(){

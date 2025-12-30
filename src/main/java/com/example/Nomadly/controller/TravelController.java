@@ -56,8 +56,9 @@ public class TravelController {
 
     //enabling a user to add travel plans. (updateNeeded: travel much only be added if no such travel exists)
     @PostMapping
-    public ResponseEntity<Travel> createTravel(@RequestBody Travel travel) {
-        Travel savedTravel = travelService.addTravel(travel);
+    public ResponseEntity<Travel> createTravel(@RequestBody Travel travel,@RequestParam Long userId) {
+
+        Travel savedTravel = travelService.addTravel(travel,userId);
         return new ResponseEntity<>(savedTravel, HttpStatus.CREATED);
     }
 
