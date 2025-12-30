@@ -7,6 +7,7 @@ import com.example.Nomadly.repository.TravelRepo;
 import com.example.Nomadly.repository.UserRepo;
 import com.example.Nomadly.repository.UserTravelRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -66,12 +67,11 @@ public class TravelService {
         if(count>=travel.get().getGroupSize())
             throw new RuntimeException("Already at max capacity.");
 
-
-
-
-        UserTravel userTravel =
-
-
+        String role = count==0?"CREATOR":"MEMBER";
+        LocalDateTime now = LocalDateTime.now();
+        UserTravel userTravel = new UserTravel(user.get(), travel.get(), role, now);
+        userTravel = userTravelRepo.save(userTravel);
+        return userTravel;
     }
 
 

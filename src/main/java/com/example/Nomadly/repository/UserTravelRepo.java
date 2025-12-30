@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface UserTravelRepo extends JpaRepository<UserTravel, Long> {
-    List<UserTravel> findByUser_UserId(Long userId);
+    List<UserTravel> findByUser(User user);
 
     List<UserTravel> findByTravel_TravelId(Long travelId);
 
