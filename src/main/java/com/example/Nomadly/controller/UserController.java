@@ -39,6 +39,14 @@ public class UserController {
         else
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestParam String email,@RequestParam String password){
+        boolean exist= userService.checkUserExists(email);
+        if(!exist)
+            return new ResponseEntity<>("No user exists, signup first!",HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>("Login Successful!",HttpStatus.OK);
+    }
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@RequestBody User user){
 //        moved this logic to the userService layer
