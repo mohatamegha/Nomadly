@@ -1,6 +1,7 @@
 package com.example.Nomadly.controller;
 
 import com.example.Nomadly.entities.Travel;
+import com.example.Nomadly.entities.UserTravel;
 import com.example.Nomadly.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,4 +57,14 @@ public class TravelController {
         Travel savedTravel = travelService.addTravel(travel);
         return new ResponseEntity<>(savedTravel, HttpStatus.CREATED);
     }
+
+    @PostMapping("/{id}/join")
+    public ResponseEntity<UserTravel> joinTravel(
+            @PathVariable Long id,
+            @RequestParam Long userId) {
+
+        UserTravel joined = travelService.joinTravel(userId, id);
+        return new ResponseEntity<>(joined, HttpStatus.CREATED);
+    }
+
 }

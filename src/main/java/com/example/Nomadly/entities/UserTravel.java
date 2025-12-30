@@ -22,8 +22,17 @@ public class UserTravel {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public UserTravel(User user, Travel travel, String role, LocalDateTime joinedAt) {
+        this.user = user;
+        this.travel = travel;
+        this.role = role;
+        this.joinedAt = joinedAt;
+    }
+
     @ManyToOne
     @JoinColumn(name = "travel_id")
     private Travel travel;
+
+    private String role;
     private LocalDateTime joinedAt;
 }
