@@ -28,9 +28,12 @@ public class TravelService {
 
     //to add a trip
     public Travel addTravel(Travel travel,Long userId){
-         travelRepo.save(travel);
-         joinTravel(userId,travel.getTravelId());
-         return travel;
+        User user = userRepo.findById(userId).orElseThrow(()->new RuntimeException("User not found"));
+        travel.setCreatedBy(user);
+
+        travelRepo.save(travel);
+        joinTravel(userId,travel.getTravelId());
+        return travel;
     }
 
     public List<Travel> getAllTravels(){

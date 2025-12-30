@@ -56,4 +56,8 @@ public class UserService {
         //to be added: checking email and password validity
         return userRepo.save(user);
     }
+
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
 }

@@ -22,6 +22,15 @@ public class UserController {
         return "Working well";
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(){
+        List<User> users = userService.getAllUsers();
+        if(users!=null && !users.isEmpty())
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id){
         User user = userService.getUserById(id);
@@ -39,6 +48,7 @@ public class UserController {
         else
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestParam String email,@RequestParam String password){
         boolean exist= userService.checkUserExists(email);
@@ -47,6 +57,7 @@ public class UserController {
         else
             return new ResponseEntity<>("Login Successful!",HttpStatus.OK);
     }
+
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@RequestBody User user){
 //        moved this logic to the userService layer
