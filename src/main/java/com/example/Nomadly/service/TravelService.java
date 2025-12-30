@@ -37,10 +37,10 @@ public class TravelService {
         return travelRepo.findAll();
     }
 
-    public List<Travel> getTravelByDestination(String destination){
-        List<Travel> travelList = travelRepo.findByDestination(destination);
-        return travelList;
-    }
+//    public List<Travel> getTravelByDestination(String destination){
+//        List<Travel> travelList = travelRepo.findByDestination(destination);
+//        return travelList;
+//    }
 
     public Travel getTravelById(Long id){
         Optional<Travel> travel = travelRepo.findById(id);

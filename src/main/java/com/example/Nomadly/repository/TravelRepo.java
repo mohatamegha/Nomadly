@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TravelRepo extends JpaRepository<Travel, Long> {
-    @Query(value="SELECT * FROM travel WHERE LOWER(destination) LIKE LOWER(CONCAT('%',:destination,'%'),)",nativeQuery = true)
-    List<Travel> findByDestination(String destination);
+//    @Query(value="SELECT * FROM travel WHERE LOWER(destination) LIKE LOWER(CONCAT('%',:destination,'%'),)",nativeQuery = true)
+//    List<Travel> findByDestination(String destination);
 }

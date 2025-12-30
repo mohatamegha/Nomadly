@@ -45,13 +45,13 @@ public class TravelController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // Search by destination
-    @GetMapping("/search")
-    public ResponseEntity<List<Travel>> getByDestination(@RequestParam String destination) {
-
-        List<Travel> travels = travelService.getTravelByDestination(destination);
-        return new ResponseEntity<>(travels, HttpStatus.OK);
-    }
+//    // Search by destination
+//    @GetMapping("/search")
+//    public ResponseEntity<List<Travel>> getByDestination(@RequestParam String destination) {
+//
+//        List<Travel> travels = travelService.getTravelByDestination(destination);
+//        return new ResponseEntity<>(travels, HttpStatus.OK);
+//    }
 
 
     //enabling a user to add travel plans. (updateNeeded: travel much only be added if no such travel exists)
