@@ -28,11 +28,11 @@ public class UserService {
     }
 
 
-    public List<Travel> getUserTravels(Long id) {
-        User user = userRepo.findById(id).orElse(null);
+    public List<Travel> getUserTravels(String email) {
+        User user = userRepo.findByEmail(email).orElse(null);
         //this validation will not be needed once login is implemented
-        if(user == null)
-            return null;
+//        if(user == null)
+//            return null;
 
         //Find all the userTravel entries from the many-to-many table by giving user object
         List<UserTravel> userTravels =  userTravelRepo.findByUser(user);
@@ -59,5 +59,9 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return userRepo.findAll();
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email).orElse(null);
     }
 }

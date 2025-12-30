@@ -27,12 +27,12 @@ public class TravelService {
     UserRepo userRepo;
 
     //to add a trip
-    public Travel addTravel(Travel travel,Long userId){
-        User user = userRepo.findById(userId).orElseThrow(()->new RuntimeException("User not found"));
+    public Travel addTravel(Travel travel,String email){
+        User user = userRepo.findByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
+//        User user = userRepo.findById(userId).orElseThrow(()->new RuntimeException("User not found"));
         travel.setCreatedBy(user);
-
         travelRepo.save(travel);
-        joinTravel(userId,travel.getTravelId());
+        joinTravel(email,travel.getTravelId());
         return travel;
     }
 
@@ -54,11 +54,11 @@ public class TravelService {
 //        return null;
     }
 
-    public UserTravel joinTravel(Long userId, Long travelId){
+    public UserTravel joinTravel(String email, Long travelId){
         Optional<Travel> travel = travelRepo.findById(travelId);
         if(travel.isEmpty())
             throw new RuntimeException("No such trip exists");
-        Optional<User> user = userRepo.findById(userId);
+        Optional<User> user = userRepo.findByEmail(email);
         if(user.isEmpty()) //this check won't be needed when the login functionality is added.. because there will always be a valid user
             throw new RuntimeException("User not found");
 

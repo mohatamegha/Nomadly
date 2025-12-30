@@ -6,6 +6,7 @@ import com.example.Nomadly.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,8 +57,9 @@ public class TravelController {
 
     //enabling a user to add travel plans. (updateNeeded: travel much only be added if no such travel exists)
     @PostMapping
-    public ResponseEntity<Travel> createTravel(@RequestBody Travel travel,@RequestParam Long userId) {
-        Travel savedTravel = travelService.addTravel(travel,userId);
+    public ResponseEntity<Travel> createTravel(@RequestBody Travel travel, Authentication authentication) {
+        String email = authentication.getName();
+        Travel savedTravel = travelService.addTravel(travel, email);
         return new ResponseEntity<>(savedTravel, HttpStatus.CREATED);
     }
 
@@ -65,9 +67,10 @@ public class TravelController {
     @PostMapping("/{id}/join")
     public ResponseEntity<UserTravel> joinTravel(
             @PathVariable Long id,
-            @RequestParam Long userId) {
+            Authentication authentication) {
 
-        UserTravel joined = travelService.joinTravel(userId, id);
+        String email = authentication.getName();
+        UserTravel joined = travelService.joinTravel(email, id);
         return new ResponseEntity<>(joined, HttpStatus.CREATED);
     }
 
