@@ -1,8 +1,10 @@
 package com.example.Nomadly.controller;
 
 import com.example.Nomadly.entities.Travel;
+import com.example.Nomadly.entities.User;
 import com.example.Nomadly.entities.UserTravel;
 import com.example.Nomadly.service.TravelService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/travels")
+@CrossOrigin(origins = "localhost:3000")
 public class TravelController {
 
     private final TravelService travelService;
@@ -72,6 +75,21 @@ public class TravelController {
         String email = authentication.getName();
         UserTravel joined = travelService.joinTravel(email, id);
         return new ResponseEntity<>(joined, HttpStatus.CREATED);
+    }
+    @GetMapping("/{id}/count")
+    public ResponseEntity<Long> countByTravel(@PathVariable Long id){
+        Long count=travelService.countByTravel(id);
+        return new ResponseEntity<>(count,HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/members")
+    public ResponseEntity<List<User>> findMembersofTravel(@PathVariable Long id){
+        List<User> users=travelService.findMembers(id);
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+    @GetMapping("/role")
+    public ResponseEntity<String> findRole(@RequestParam Long userId,@RequestParam Long travelId){
+        return travelService.getRole(userId,travelId);
     }
 
 }
