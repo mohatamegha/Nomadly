@@ -7,8 +7,11 @@ import com.example.Nomadly.repository.TravelRepo;
 import com.example.Nomadly.repository.UserRepo;
 import com.example.Nomadly.repository.UserTravelRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -81,7 +84,7 @@ public class TravelService {
         if(joined)
             throw new RuntimeException("Already joined the trip! ");
 
-        long count = userTravelRepo.countByTravel(travel.get());
+        Long count = userTravelRepo.countByTravel_TravelId(travel.get().getTravelId());
 
         if(count>=travel.get().getGroupSize())
             throw new RuntimeException("Already at max capacity.");
@@ -94,6 +97,19 @@ public class TravelService {
     }
 
 
+    public Long countByTravel(Long id) {
+        return userTravelRepo.countByTravel_TravelId(id);
+    }
 
 
+    public List<User> findMembers(Long id) {
+        List<UserTravel>userTravels= userTravelRepo.findByTravel_TravelId(id);
+        return userTravels.stream()
+                .map(userTravel -> userTravel.getUser())
+                .toList();
+    }
+    public ResponseEntity<String> getRole(Long userId,Long travelId){
+        String role=userTravelRepo.findRoleByUserAndTravel(userId,travelId);
+        return new ResponseEntity<>(role, HttpStatus.OK);
+    }
 }
