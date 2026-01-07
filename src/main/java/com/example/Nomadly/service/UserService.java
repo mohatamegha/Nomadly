@@ -8,6 +8,8 @@ import com.example.Nomadly.repository.UserTravelRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +54,7 @@ public class UserService {
         boolean userExists = checkUserExists(user.getEmail());
         if(userExists)
             throw new RuntimeException("User already exists with this email");
+        user.setDateJoined(LocalDateTime.now().toLocalDate().toString());
         //user does not exist, so create new user
         //to be added: checking email and password validity
         return userRepo.save(user);
