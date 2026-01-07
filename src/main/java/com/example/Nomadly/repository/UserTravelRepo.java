@@ -3,9 +3,7 @@ package com.example.Nomadly.repository;
 import com.example.Nomadly.entities.Travel;
 import com.example.Nomadly.entities.User;
 import com.example.Nomadly.entities.UserTravel;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -31,7 +29,5 @@ public interface UserTravelRepo extends JpaRepository<UserTravel, Long> {
 String findRoleByUserAndTravel(@Param("userId") Long userId,
                               @Param("travelId") Long travelId);
 
-    @Modifying
-    @Transactional
-    void deleteByUserAndTravel_TravelId(User user, Long travelId);
+    long countByTravel(Travel travel);
 }

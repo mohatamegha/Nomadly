@@ -41,8 +41,20 @@ public class TravelService {
         return travel;
     }
 
+    public long getMemberCount(Travel travel) {
+        long count = userTravelRepo.countByTravel(travel);
+        return count;
+    }
+
     public List<Travel> getAllTravels(){
-        return travelRepo.findAll();
+        List<Travel> travels = travelRepo.findAll();
+        List<Travel> responseList = travels.stream().map( (travel -> {
+            long count = getMemberCount(travel);
+            travel.setMembersJoined((int)count);
+            return travel;
+        })).toList();
+
+        return responseList;
     }
 
 //    public List<Travel> getTravelByDestination(String destination){
@@ -52,6 +64,8 @@ public class TravelService {
 
     public Travel getTravelById(Long id){
         Optional<Travel> travel = travelRepo.findById(id);
+        int count = (int) getMemberCount(travel.get());
+        travel.get().setMembersJoined(count);
         return travel.orElse(null);
         //some change made on a diff branch
 //        if(travel.isPresent())
