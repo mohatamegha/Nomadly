@@ -4,6 +4,7 @@ import com.example.Nomadly.entities.Travel;
 import com.example.Nomadly.entities.User;
 import com.example.Nomadly.entities.UserTravel;
 import com.example.Nomadly.service.TravelService;
+import com.example.Nomadly.service.UserService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +17,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/travels")
-@CrossOrigin(origins = "localhost:3000")
+@CrossOrigin(origins = "localhost:5173")
 public class TravelController {
 
     private final TravelService travelService;
+    private final UserService userService;
 
     @Autowired
-    public TravelController(TravelService travelService) {
+    public TravelController(TravelService travelService, UserService userService) {
         this.travelService = travelService;
+        this.userService = userService;
     }
 
     //checking if the endpoint is working as expected
@@ -86,6 +89,12 @@ public class TravelController {
     public ResponseEntity<List<User>> findMembersofTravel(@PathVariable Long id){
         List<User> users=travelService.findMembers(id);
         return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> leaveTrip(@PathVariable Long id,Authentication authentication){
+        String email=authentication.getName();
+        User user=userService.getUserByEmail(email);
+        return travelService.leaveTrip(id,user);
     }
     @GetMapping("/role")
     public ResponseEntity<String> findRole(@RequestParam Long userId,@RequestParam Long travelId){

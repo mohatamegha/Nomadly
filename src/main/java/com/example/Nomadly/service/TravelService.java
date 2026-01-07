@@ -6,6 +6,7 @@ import com.example.Nomadly.entities.UserTravel;
 import com.example.Nomadly.repository.TravelRepo;
 import com.example.Nomadly.repository.UserRepo;
 import com.example.Nomadly.repository.UserTravelRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class TravelService {
 
     @Autowired
@@ -97,5 +99,10 @@ public class TravelService {
     public ResponseEntity<String> getRole(Long userId,Long travelId){
         String role=userTravelRepo.findRoleByUserAndTravel(userId,travelId);
         return new ResponseEntity<>(role, HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> leaveTrip(Long id, User user) {
+         userTravelRepo.deleteByUserAndTravel_TravelId(user,id);
+         return new ResponseEntity<>("success",HttpStatus.OK);
     }
 }

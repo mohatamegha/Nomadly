@@ -1,23 +1,17 @@
 package com.example.Nomadly.controller;
 
 import com.example.Nomadly.entities.ChatMessage;
-import com.example.Nomadly.entities.ChatMessageWrapper;
+import com.example.Nomadly.dto.ChatMessageWrapper;
 import com.example.Nomadly.entities.Travel;
 import com.example.Nomadly.entities.User;
 import com.example.Nomadly.repository.ChatRepo;
 import com.example.Nomadly.repository.TravelRepo;
 import com.example.Nomadly.repository.UserRepo;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ChatController {

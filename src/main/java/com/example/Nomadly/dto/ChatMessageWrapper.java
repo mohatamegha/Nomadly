@@ -1,8 +1,4 @@
-package com.example.Nomadly.entities;
-
-import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
+package com.example.Nomadly.dto;
 
 public class ChatMessageWrapper {
 
