@@ -28,4 +28,6 @@ public interface UserTravelRepo extends JpaRepository<UserTravel, Long> {
 """)
 String findRoleByUserAndTravel(@Param("userId") Long userId,
                               @Param("travelId") Long travelId);
+
+    long countByTravel(Travel travel);
 }
