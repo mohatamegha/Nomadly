@@ -44,13 +44,21 @@ public class TravelService {
         return count;
     }
 
-    public List<Travel> getAllTravels(){
+    public boolean joined(User user, Travel travel){
+        boolean joined = userTravelRepo.existsByUserAndTravel(user, travel);
+        return joined;
+    }
+
+    public List<Travel> getAllTravels(String email){
         List<Travel> travels = travelRepo.findAll();
-        List<Travel> responseList = travels.stream().map( (travel -> {
-            long count = getMemberCount(travel);
-            travel.setMembersJoined((int)count);
-            return travel;
-        })).toList();
+        User user = userRepo.findByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
+        List<Travel> responseList = travels.stream()
+                .filter(travel -> !joined(user, travel))
+                .peek(travel -> {
+                    long count = getMemberCount(travel);
+                    travel.setMembersJoined((int) count);
+                })
+                .toList();
 
         return responseList;
     }
