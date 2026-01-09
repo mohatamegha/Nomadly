@@ -38,6 +38,7 @@ public class TravelService {
         travel.setCreatedBy(user);
         travelRepo.save(travel);
         joinTravel(email,travel.getTravelId());
+        System.out.println("service called");
         return travel;
     }
 

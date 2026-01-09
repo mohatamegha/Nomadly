@@ -64,6 +64,7 @@ public class TravelController {
     //enabling a user to add travel plans. (updateNeeded: travel much only be added if no such travel exists)
     @PostMapping
     public ResponseEntity<Travel> createTravel(@RequestBody Travel travel, Authentication authentication) {
+        System.out.println("called travel controller");
         String email = authentication.getName();
         Travel savedTravel = travelService.addTravel(travel, email);
         return new ResponseEntity<>(savedTravel, HttpStatus.CREATED);
