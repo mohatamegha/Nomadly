@@ -37,8 +37,9 @@ public class TravelController {
 
     //Get all travels (Discover) : for the main screen
     @GetMapping
-    public ResponseEntity<List<Travel>> getAllTravels() {
-        List<Travel> travels = travelService.getAllTravels();
+    public ResponseEntity<List<Travel>> getAllTravels(Authentication authentication) {
+        String email = authentication.getName();
+        List<Travel> travels = travelService.getAllTravels(email);
         return new ResponseEntity<>(travels, HttpStatus.OK);
     }
 
