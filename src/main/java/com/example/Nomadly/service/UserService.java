@@ -6,6 +6,7 @@ import com.example.Nomadly.entities.UserTravel;
 import com.example.Nomadly.repository.UserRepo;
 import com.example.Nomadly.repository.UserTravelRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -20,6 +21,9 @@ public class UserService {
 
     @Autowired
     UserTravelRepo userTravelRepo;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public User createUser(User user){
         return userRepo.save(user);
@@ -66,5 +70,30 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return userRepo.findByEmail(email).orElse(null);
+    }
+
+
+    //phone number, email and password cannot be changes through this method
+    public User updateUser(String email, User updatedUser){
+        User user = userRepo.findByEmail(email).orElse(null);
+        if(user == null)
+            throw new RuntimeException("User does not exist!");
+
+        if(updatedUser.getPhoto()!=null)
+            user.setPhoto(updatedUser.getPhoto());
+        if(updatedUser.getName()!=null)
+            user.setName(updatedUser.getName());
+        if(updatedUser.getCurrentCity()!=null)
+            user.setCurrentCity(updatedUser.getCurrentCity());
+        if(updatedUser.getCurrentCountry()!=null)
+            user.setCurrentCountry(updatedUser.getCurrentCountry());
+        if(updatedUser.getAbout()!=null)
+            user.setAbout(updatedUser.getAbout());
+
+//        if(updatedUser.getPassword()!=null)
+//            user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        updatedUser = userRepo.save(user);
+        System.out.println("Service executed");
+        return updatedUser;
     }
 }
