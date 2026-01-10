@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "localhost:5173")
 public class AuthController {
 
     @Autowired
@@ -55,5 +55,4 @@ public class AuthController {
         String token = jwtUtil.generateToken(request.getEmail());
         return ResponseEntity.ok(token);
     }
-
 }
