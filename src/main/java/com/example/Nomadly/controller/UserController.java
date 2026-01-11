@@ -53,6 +53,18 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUser(Authentication authentication, @RequestBody User user){
+        System.out.println("Controller called");
+        try{
+            User updatedUser = userService.updateUser(authentication.getName(), user);
+            System.out.println("Update done!");
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 //    @PostMapping("/login")
 //    public ResponseEntity<String> loginUser(@RequestParam String email,@RequestParam String password){
 //        boolean exist= userService.checkUserExists(email);
