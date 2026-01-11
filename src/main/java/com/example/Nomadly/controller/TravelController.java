@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/travels")
-@CrossOrigin(origins = "localhost:5173")
+@CrossOrigin(origins = {"localhost:5173","localhost:5174"})
 public class TravelController {
 
     private final TravelService travelService;

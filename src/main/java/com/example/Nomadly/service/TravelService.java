@@ -44,15 +44,18 @@ public class TravelService {
 
     public long getMemberCount(Travel travel) {
         long count = userTravelRepo.countByTravel(travel);
+
         return count;
     }
 
     public boolean joined(User user, Travel travel){
         boolean joined = userTravelRepo.existsByUserAndTravel(user, travel);
+
         return joined;
     }
 
     public List<Travel> getAllTravels(String email){
+
         List<Travel> travels = travelRepo.findAll();
         User user = userRepo.findByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
         List<Travel> responseList = travels.stream()
@@ -60,6 +63,7 @@ public class TravelService {
                 .peek(travel -> {
                     long count = getMemberCount(travel);
                     travel.setMembersJoined((int) count);
+                   // System.out.println(travel.getMembersJoined());
                 })
                 .toList();
 
@@ -101,6 +105,7 @@ public class TravelService {
             throw new RuntimeException("Already at max capacity.");
 
         String role = count==0?"CREATOR":"MEMBER";
+
         LocalDateTime now = LocalDateTime.now();
         UserTravel userTravel = new UserTravel(user.get(), travel.get(), role, now);
         userTravel = userTravelRepo.save(userTravel);
