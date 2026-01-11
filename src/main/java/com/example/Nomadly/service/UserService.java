@@ -17,7 +17,8 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     UserRepo userRepo;
-
+    @Autowired
+     TravelService travelService;
     @Autowired
     UserTravelRepo userTravelRepo;
 
@@ -40,9 +41,14 @@ public class UserService {
         List<UserTravel> userTravels =  userTravelRepo.findByUser(user);
 
         //the jpa maps the travel object from the travel ids stored and we get all the travel objects ultimately.
-        return userTravels.stream()
+        List<Travel> travel= userTravels.stream()
                 .map(userTravel -> userTravel.getTravel())
                 .toList();
+        for(Travel t:travel){
+            long count=travelService.getMemberCount(t);
+            t.setMembersJoined((int)count);
+        }
+        return travel;
     }
 
     public boolean checkUserExists(String email) {
