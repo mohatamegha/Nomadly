@@ -23,8 +23,9 @@ public class Travel {
     private String travelType; //not used anywhere as yet
     private String description;
     private int groupSize;
-    private int membersJoined;
 
+    private int membersJoined;
+    private String country;
     @ManyToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
@@ -32,7 +33,7 @@ public class Travel {
     public Travel() {
     }
 
-    public Travel(Long travelId, String destination, LocalDate startDate, int duration, double budget, String travelType, String description, int groupSize, User createdBy) {
+    public Travel(Long travelId,String imageUrl, String destination, LocalDate startDate, int duration, double budget, String travelType, String description, int groupSize, int membersJoined,User createdBy,String country) {
         this.travelId = travelId;
         this.destination = destination;
         this.startDate = startDate;
@@ -42,6 +43,33 @@ public class Travel {
         this.description = description;
         this.groupSize = groupSize;
         this.createdBy = createdBy;
+        this.imageUrl=imageUrl;
+        this.membersJoined=membersJoined;
+        this.country=country;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public int getMembersJoined() {
+        return membersJoined;
+    }
+
+    public void setMembersJoined(int membersJoined) {
+        this.membersJoined = membersJoined;
     }
 
     public Long getTravelId() {
